@@ -7,9 +7,10 @@ import { LayoutDashboard, Database, FileSpreadsheet, Sparkles, Settings, Users }
 import { ExcelUpload } from '@/components/ExcelUpload'
 import { KnowledgeIngestion } from '@/components/KnowledgeIngestion'
 import { AdminEmployeesTable } from '@/components/dashboards/AdminEmployeesTable'
+import GlobalDashboard from '@/components/dashboards/GlobalDashboard'
 
 export default function AdminPage() {
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'empleados'>('dashboard')
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'empleados' | 'carga'>('dashboard')
     return (
         <div className="flex min-h-screen bg-slate-50">
             {/* Sidebar Simple */}
@@ -20,11 +21,15 @@ export default function AdminPage() {
                 <nav className="space-y-2">
                     <button onClick={() => setActiveTab('dashboard')} className={`flex w-full items-center gap-3 p-2 rounded-md transition-colors text-slate-300 ${activeTab === 'dashboard' ? 'bg-blue-600 !text-white font-medium' : 'hover:bg-slate-800'}`}>
                         <LayoutDashboard className="h-5 w-5" />
-                        Dashboard / IA
+                        Dashboard Analítico
                     </button>
                     <button onClick={() => setActiveTab('empleados')} className={`flex w-full items-center gap-3 p-2 rounded-md transition-colors text-slate-300 ${activeTab === 'empleados' ? 'bg-blue-600 !text-white font-medium' : 'hover:bg-slate-800'}`}>
                         <Users className="h-5 w-5" />
-                        Clientes / Evaluaciones
+                        Directorio de Clientes
+                    </button>
+                    <button onClick={() => setActiveTab('carga')} className={`flex w-full items-center gap-3 p-2 rounded-md transition-colors text-slate-300 ${activeTab === 'carga' ? 'bg-blue-600 !text-white font-medium' : 'hover:bg-slate-800'}`}>
+                        <Database className="h-5 w-5" />
+                        Carga y Base de Datos
                     </button>
                     <div className="flex items-center gap-3 p-2 rounded-md text-slate-500 font-medium">
                         <Settings className="h-5 w-5" />
@@ -46,6 +51,12 @@ export default function AdminPage() {
 
                 <div className="grid gap-8">
                     {activeTab === 'dashboard' && (
+                        <div className="animate-in fade-in zoom-in-95 duration-300">
+                            <GlobalDashboard />
+                        </div>
+                    )}
+
+                    {activeTab === 'carga' && (
                         <>
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                                 <div className="flex items-center gap-2 mb-6 text-slate-900">

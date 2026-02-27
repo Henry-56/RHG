@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Loader2 } from 'lucide-react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Loader2, Eye } from 'lucide-react'
 
 interface AdminEmployeeProps {
     id: string;
@@ -24,6 +25,7 @@ interface AdminEmployeeProps {
     productividad: number;
     etiqueta: string;
     fecha: string;
+    respuestas: Record<string, number>;
 }
 
 export function AdminEmployeesTable() {
@@ -91,6 +93,7 @@ export function AdminEmployeesTable() {
                                 <TableHead className="text-right font-bold">Desempeño</TableHead>
                                 <TableHead className="text-right font-bold">Productividad</TableHead>
                                 <TableHead className="font-bold">Etiqueta HR</TableHead>
+                                <TableHead className="font-bold">Detalle</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -124,6 +127,28 @@ export function AdminEmployeesTable() {
                                         >
                                             {emp.etiqueta}
                                         </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <button className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 font-semibold bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded transition-colors">
+                                                    <Eye className="h-3 w-3" /> Ver Respuestas
+                                                </button>
+                                            </DialogTrigger>
+                                            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                                                <DialogHeader>
+                                                    <DialogTitle>Evaluación Detallada: {emp.nombre}</DialogTitle>
+                                                </DialogHeader>
+                                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                                    {Object.entries(emp.respuestas || {}).map(([key, val]) => (
+                                                        <div key={key} className="flex justify-between border-b border-slate-100 pb-2">
+                                                            <span className="text-sm text-slate-600 font-medium uppercase">{key}</span>
+                                                            <span className="text-sm font-bold bg-slate-100 px-2 py-0.5 rounded">{val}/5</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </DialogContent>
+                                        </Dialog>
                                     </TableCell>
                                 </TableRow>
                             ))}
