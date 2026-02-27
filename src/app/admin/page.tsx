@@ -66,6 +66,7 @@ export default function AdminPage() {
                                 <ExcelUpload />
                             </section>
 
+                            {/* 
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                                 <div className="flex items-center gap-2 mb-6 text-slate-900">
                                     <Sparkles className="h-6 w-6 text-purple-500" />
@@ -73,6 +74,7 @@ export default function AdminPage() {
                                 </div>
                                 <KnowledgeIngestion />
                             </section>
+                            */}
                         </>
                     )}
 
