@@ -1,10 +1,15 @@
+'use client';
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { LayoutDashboard, Database, FileSpreadsheet, Sparkles, Settings } from 'lucide-react'
+import { LayoutDashboard, Database, FileSpreadsheet, Sparkles, Settings, Users } from 'lucide-react'
 import { ExcelUpload } from '@/components/ExcelUpload'
 import { KnowledgeIngestion } from '@/components/KnowledgeIngestion'
+import { AdminEmployeesTable } from '@/components/dashboards/AdminEmployeesTable'
 
-export default async function AdminPage() {
+export default function AdminPage() {
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'empleados'>('dashboard')
     return (
         <div className="flex min-h-screen bg-slate-50">
             {/* Sidebar Simple */}
@@ -13,11 +18,15 @@ export default async function AdminPage() {
                     GenImpact <span className="text-blue-400">Admin</span>
                 </div>
                 <nav className="space-y-2">
-                    <Link href="/dashboard" className="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-md transition-colors text-slate-300">
+                    <button onClick={() => setActiveTab('dashboard')} className={`flex w-full items-center gap-3 p-2 rounded-md transition-colors text-slate-300 ${activeTab === 'dashboard' ? 'bg-blue-600 !text-white font-medium' : 'hover:bg-slate-800'}`}>
                         <LayoutDashboard className="h-5 w-5" />
-                        Dashboard
-                    </Link>
-                    <div className="flex items-center gap-3 p-2 bg-blue-600 rounded-md text-white font-medium">
+                        Dashboard / IA
+                    </button>
+                    <button onClick={() => setActiveTab('empleados')} className={`flex w-full items-center gap-3 p-2 rounded-md transition-colors text-slate-300 ${activeTab === 'empleados' ? 'bg-blue-600 !text-white font-medium' : 'hover:bg-slate-800'}`}>
+                        <Users className="h-5 w-5" />
+                        Clientes / Evaluaciones
+                    </button>
+                    <div className="flex items-center gap-3 p-2 rounded-md text-slate-500 font-medium">
                         <Settings className="h-5 w-5" />
                         Configuración
                     </div>
@@ -36,21 +45,31 @@ export default async function AdminPage() {
                 </header>
 
                 <div className="grid gap-8">
-                    <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <div className="flex items-center gap-2 mb-6 text-slate-900">
-                            <FileSpreadsheet className="h-6 w-6 text-emerald-500" />
-                            <h2 className="text-xl font-bold">Carga Masiva de Evaluaciones</h2>
-                        </div>
-                        <ExcelUpload />
-                    </section>
+                    {activeTab === 'dashboard' && (
+                        <>
+                            <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <div className="flex items-center gap-2 mb-6 text-slate-900">
+                                    <FileSpreadsheet className="h-6 w-6 text-emerald-500" />
+                                    <h2 className="text-xl font-bold">Carga Masiva de Evaluaciones</h2>
+                                </div>
+                                <ExcelUpload />
+                            </section>
 
-                    <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <div className="flex items-center gap-2 mb-6 text-slate-900">
-                            <Sparkles className="h-6 w-6 text-purple-500" />
-                            <h2 className="text-xl font-bold">Base de Conocimiento IA</h2>
+                            <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <div className="flex items-center gap-2 mb-6 text-slate-900">
+                                    <Sparkles className="h-6 w-6 text-purple-500" />
+                                    <h2 className="text-xl font-bold">Base de Conocimiento IA</h2>
+                                </div>
+                                <KnowledgeIngestion />
+                            </section>
+                        </>
+                    )}
+
+                    {activeTab === 'empleados' && (
+                        <div className="animate-in fade-in zoom-in-95 duration-300">
+                            <AdminEmployeesTable />
                         </div>
-                        <KnowledgeIngestion />
-                    </section>
+                    )}
                 </div>
             </main>
         </div>

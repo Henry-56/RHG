@@ -37,6 +37,13 @@ export default function RootPage() {
           <QuickAnalysis />
         </section>
 
+        <div className="flex justify-center">
+          <a href="/evaluacion-individual" className="text-blue-600 hover:text-blue-800 font-bold flex items-center gap-2 hover:underline transition-all">
+            <span>O Evalúa a un Empleado Individualmente</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
         {/* Sección de Ayuda/Footer */}
         <div className="grid md:grid-cols-2 gap-8 pt-12 border-t border-slate-200">
           <div className="space-y-4">

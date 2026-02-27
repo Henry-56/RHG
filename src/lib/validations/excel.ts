@@ -10,14 +10,10 @@ export const empleadoSchema = z.object({
     email: z.string().email("email inválido").optional().or(z.literal('')),
     anio_nacimiento: z.number().int().optional().or(z.literal('')),
     area: z.string().min(1, "area es requerida"),
-    turno: z.enum(['Dia', 'Noche', 'Rotativo', 'Administrativo'], {
-        errorMap: () => ({ message: "Turno debe ser Dia, Noche, Rotativo o Administrativo" })
-    }),
+    turno: z.string(),
     equipo: z.string().min(1, "equipo es requerido"),
     puesto: z.string().min(1, "puesto es requerido"),
-    antiguedad_rango: z.enum(['<1', '1-3', '3-5', '>5'], {
-        errorMap: () => ({ message: "antiguedad_rango debe ser <1, 1-3, 3-5 o >5" })
-    }),
+    antiguedad_rango: z.string(),
     activo: z.boolean().or(z.string().transform(val => val.toLowerCase() === 'true'))
 })
 

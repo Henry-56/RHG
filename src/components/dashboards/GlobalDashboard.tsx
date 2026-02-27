@@ -12,7 +12,8 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AIAnalysisReport } from '@/components/dashboards/AIAnalysisReport'
-import { BarChart3, Sparkles } from 'lucide-react'
+import { EmployeesTable } from '@/components/dashboards/EmployeesTable'
+import { BarChart3, Sparkles, Table as TableIcon } from 'lucide-react'
 
 export default function GlobalDashboard() {
     const [data, setData] = useState<any>(null)
@@ -77,10 +78,14 @@ export default function GlobalDashboard() {
             <KPICards data={data?.kpis} />
 
             <Tabs defaultValue="charts" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 max-w-[400px] mb-4">
+                <TabsList className="grid w-full grid-cols-3 max-w-[600px] mb-4">
                     <TabsTrigger value="charts" className="flex items-center gap-2">
                         <BarChart3 className="h-4 w-4" />
                         Visualización
+                    </TabsTrigger>
+                    <TabsTrigger value="table" className="flex items-center gap-2">
+                        <TableIcon className="h-4 w-4" />
+                        Datos de Empleados
                     </TabsTrigger>
                     <TabsTrigger value="ai" className="flex items-center gap-2">
                         <Sparkles className="h-4 w-4" />
@@ -97,6 +102,10 @@ export default function GlobalDashboard() {
                             </>
                         )}
                     </div>
+                </TabsContent>
+
+                <TabsContent value="table" className="mt-6">
+                    <EmployeesTable data={data?.tableData} />
                 </TabsContent>
 
                 <TabsContent value="ai" className="mt-6">

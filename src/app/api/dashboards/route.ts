@@ -41,27 +41,55 @@ export async function POST(request: Request) {
         const avgProductividad = total > 0 ? filteredEvals.reduce((acc, curr) => acc + curr.scoreProductividad, 0) / total : 0
         const avgTotal = total > 0 ? filteredEvals.reduce((acc, curr) => acc + curr.scoreTotal, 0) / total : 0
 
-        // 4. Agrupar por generación para gráfico
-        const genCounts: any = {}
+        // 3. Formatear datos para el cliente
+        const kpis = {
+            totalEvaluados: total,
+            promedioDesempeno: Number(avgDesempeno.toFixed(2)),
+            promedioProductividad: Number(avgProductividad.toFixed(2))
+        }
+
+        const rawRecords = filteredEvals.map(ev => ({
+            id: ev.id,
+            desempeno: ev.scoreDesempeno,
+            productividad: ev.scoreProductividad,
+            gen: getGeneration(ev.employee.anioNacimiento),
+            area: ev.employee.area
+        }))
+
+        const genMetrics: Record<string, { count: number, des: number, prod: number }> = {}
         filteredEvals.forEach(ev => {
             const g = getGeneration(ev.employee.anioNacimiento)
-            genCounts[g] = (genCounts[g] || 0) + 1
+            if (!genMetrics[g]) genMetrics[g] = { count: 0, des: 0, prod: 0 }
+            genMetrics[g].count += 1
+            genMetrics[g].des += ev.scoreDesempeno
+            genMetrics[g].prod += ev.scoreProductividad
         })
 
-        const generationsData = Object.keys(genCounts).map(name => ({
+        const generaciones = Object.keys(genMetrics).map(name => ({
             name,
-            cantidad: genCounts[name]
+            desempeno: Number((genMetrics[name].des / genMetrics[name].count).toFixed(2)),
+            productividad: Number((genMetrics[name].prod / genMetrics[name].count).toFixed(2))
+        }))
+
+        const tableData = filteredEvals.map(ev => ({
+            id: ev.id,
+            nombre: ev.employee.nombres,
+            area: ev.employee.area,
+            generacion: getGeneration(ev.employee.anioNacimiento),
+            desempeno: ev.scoreDesempeno,
+            productividad: ev.scoreProductividad,
+            etiqueta: ev.etiqueta
         }))
 
         return NextResponse.json({
-            summary: {
-                totalEvaluaciones: total,
-                avgDesempeno: Number(avgDesempeno.toFixed(2)),
-                avgProductividad: Number(avgProductividad.toFixed(2)),
-                avgTotal: Number(avgTotal.toFixed(2)),
-            },
-            generationsData,
-            evaluations: filteredEvals
+            data: {
+                kpis,
+                rutinaGraficos: {
+                    generaciones,
+                    rawRecords
+                },
+                tableData
+            }
         })
 
     } catch (error: any) {
