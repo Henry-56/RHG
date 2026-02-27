@@ -1,65 +1,62 @@
-import Image from "next/image";
+import QuickAnalysis from '@/components/QuickAnalysis'
+import { Zap, ShieldCheck, Mail } from 'lucide-react'
 
-export default function Home() {
+export default function RootPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Navbar Minimalista */}
+      <header className="h-20 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-600 p-2 rounded-lg">
+            <Zap className="h-6 w-6 text-white" />
+          </div>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">GenImpact <span className="text-blue-600">HR</span></h1>
+        </div>
+        <div className="hidden md:flex items-center gap-6 text-sm font-bold text-slate-500">
+          <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full text-slate-600">
+            <ShieldCheck className="h-4 w-4" />
+            Privacidad Garantizada
+          </span>
+        </div>
+      </header>
+
+      {/* Contenedor Principal */}
+      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-12 space-y-12">
+        <div className="text-center space-y-4">
+          <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            Analiza tu talento con <br />
+            <span className="text-blue-600">Inteligencia Artificial</span>
+          </h2>
+          <p className="text-slate-500 text-lg max-w-xl mx-auto">
+            Sube los resultados de tus encuestas en Excel y deja que nuestra IA identifique las mejores métricas generacionales por ti.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Zona de Carga y Análisis */}
+        <section className="bg-white rounded-3xl p-2 shadow-2xl shadow-blue-900/10">
+          <QuickAnalysis />
+        </section>
+
+        {/* Sección de Ayuda/Footer */}
+        <div className="grid md:grid-cols-2 gap-8 pt-12 border-t border-slate-200">
+          <div className="space-y-4">
+            <h4 className="font-bold text-slate-900">¿Qué datos necesito?</h4>
+            <p className="text-slate-400 text-sm">
+              Tu Excel debe tener dos hojas principales: <strong>EMPLEADOS</strong> (datos básicos) y <strong>EVALUACIONES</strong> (respuestas).
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h4 className="font-bold text-slate-900">Seguridad de Datos</h4>
+            <p className="text-slate-400 text-sm">
+              Toda la información es analizada de forma encriptada y no se utiliza para entrenar modelos públicos.
+            </p>
+          </div>
         </div>
       </main>
+
+      <footer className="py-8 text-center text-slate-400 text-xs border-t border-slate-100 bg-white">
+        © 2026 GenImpact HR - Prototipo de Análisis Rápido.
+      </footer>
     </div>
-  );
+  )
 }

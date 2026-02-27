@@ -1,0 +1,104 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+enum Role {
+  ADMIN
+  EVALUATOR
+  USER
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+}
+
+model Campaign {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  startDate   DateTime
+  endDate     DateTime
+  evaluations Evaluation[]
+}
+
+model Employee {
+  id              String       @id
+  nombres         String
+  email           String?
+  anioNacimiento  Int?
+  area            String
+  turno           String
+  equipo          String
+  puesto          String
+  antiguedadRango String
+  activo          Boolean      @default(true)
+  evaluations     Evaluation[]
+}
+
+model Evaluation {
+  id                 String   @id @default(uuid())
+  employeeId         String
+  campaignId         String
+  evaluatorEmail     String
+  fecha              DateTime
+  
+  q1  Int
+  q2  Int
+  q3  Int
+  q4  Int
+  q5  Int
+  q6  Int
+  q7  Int
+  q8  Int
+  q9  Int
+  q10 Int
+  q11 Int
+  q12 Int
+  q13 Int
+  q14 Int
+  q15 Int
+  q16 Int
+  q17 Int
+  q18 Int
+  q19 Int
+  q20 Int
+  
+  scoreDesempeno     Float
+  scoreProductividad Float
+  scoreTotal         Float
+  etiqueta           String
+  
+  comentarios        String?
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+  campaign Campaign @relation(fields: [campaignId], references: [id])
+
+  @@unique([employeeId, campaignId])
+}
+
+model DocumentChunk {
+  id        String                       @id @default(uuid())
+  title     String
+  content   String
+  embedding Unsupported("vector(768)")?
+  source    String
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  details   Json?
+  timestamp DateTime @default(now())
+}
