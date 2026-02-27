@@ -7,29 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { User, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react'
+import { HR_QUESTIONS as QUESTIONS } from '@/lib/constants'
 
-const QUESTIONS = [
-    "Cumplimiento de objetivos mensuales",
-    "Calidad del trabajo entregado",
-    "Resolución de problemas técnicos",
-    "Capacidad de trabajo bajo presión",
-    "Puntualidad y asistencia",
-    "Adaptabilidad a nuevos procesos",
-    "Iniciativa para proponer mejoras",
-    "Comunicación efectiva con el equipo",
-    "Colaboración interdisciplinaria",
-    "Liderazgo en proyectos pequeños",
-    "Eficiencia en uso de herramientas",
-    "Tiempo de respuesta a clientes/internos",
-    "Organización del espacio y recursos",
-    "Participación en reuniones",
-    "Capacidad de recibir feedback",
-    "Manejo de conflictos",
-    "Actualización constante (aprendizaje)",
-    "Apoyo a nuevos compañeros",
-    "Alineación con cultura de la empresa",
-    "Reporte oportuno de incidentes"
-]
+
 
 export function IndividualEvaluationForm() {
     const [step, setStep] = useState<1 | 2 | 3>(1)

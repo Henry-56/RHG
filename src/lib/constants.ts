@@ -1,0 +1,22 @@
+export const HR_QUESTIONS = [
+    "Cumplimiento de objetivos mensuales",
+    "Calidad del trabajo entregado",
+    "Resolución de problemas técnicos",
+    "Capacidad de trabajo bajo presión",
+    "Puntualidad y asistencia",
+    "Adaptabilidad a nuevos procesos",
+    "Iniciativa para proponer mejoras",
+    "Comunicación efectiva con el equipo",
+    "Colaboración interdisciplinaria",
+    "Liderazgo en proyectos pequeños",
+    "Eficiencia en uso de herramientas",
+    "Tiempo de respuesta a clientes/internos",
+    "Organización del espacio y recursos",
+    "Participación en reuniones",
+    "Capacidad de recibir feedback",
+    "Manejo de conflictos",
+    "Actualización constante (aprendizaje)",
+    "Apoyo a nuevos compañeros",
+    "Alineación con cultura de la empresa",
+    "Reporte oportuno de incidentes"
+];

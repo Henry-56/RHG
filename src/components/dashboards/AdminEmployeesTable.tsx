@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Loader2, Eye } from 'lucide-react'
+import { HR_QUESTIONS } from '@/lib/constants'
 
 interface AdminEmployeeProps {
     id: string;
@@ -139,13 +140,30 @@ export function AdminEmployeesTable() {
                                                 <DialogHeader>
                                                     <DialogTitle>Evaluación Detallada: {emp.nombre}</DialogTitle>
                                                 </DialogHeader>
-                                                <div className="grid grid-cols-2 gap-4 mt-4">
-                                                    {Object.entries(emp.respuestas || {}).map(([key, val]) => (
-                                                        <div key={key} className="flex justify-between border-b border-slate-100 pb-2">
-                                                            <span className="text-sm text-slate-600 font-medium uppercase">{key}</span>
-                                                            <span className="text-sm font-bold bg-slate-100 px-2 py-0.5 rounded">{val}/5</span>
-                                                        </div>
-                                                    ))}
+                                                <div className="space-y-4 mt-6">
+                                                    {HR_QUESTIONS.map((pregunta, idx) => {
+                                                        const key = `q${idx + 1}`;
+                                                        const val = emp.respuestas[key];
+                                                        return (
+                                                            <div key={key} className="flex flex-col gap-1 border-b border-slate-100 pb-3">
+                                                                <div className="flex justify-between items-start gap-4">
+                                                                    <span className="text-sm font-semibold text-slate-700">
+                                                                        {idx + 1}. {pregunta}
+                                                                    </span>
+                                                                    <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-bold shrink-0">
+                                                                        {val || 0} / 5
+                                                                    </Badge>
+                                                                </div>
+                                                                <div className="w-full bg-slate-100 h-1.5 rounded-full mt-1 overflow-hidden">
+                                                                    <div
+                                                                        className={`h-full rounded-full transition-all ${(val || 0) >= 4 ? 'bg-emerald-500' : (val || 0) <= 2 ? 'bg-red-500' : 'bg-blue-500'
+                                                                            }`}
+                                                                        style={{ width: `${((val || 0) / 5) * 100}%` }}
+                                                                    ></div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </div>
                                             </DialogContent>
                                         </Dialog>
